@@ -3,6 +3,7 @@ public class InvoiceService {
     private static final int NORMAL_COST_PER_MIN = 1;
     private static final double NORMAL_MINIMUM_FARE = 5;
     private TypesOfCabs types;
+    private double averagePerRide;
 
     public InvoiceService(TypesOfCabs types) {
         this.types = types;
@@ -14,5 +15,14 @@ public class InvoiceService {
             return Math.max(totalFare, NORMAL_MINIMUM_FARE);
         }
         return 0.0;
+    }
+
+    public double calculateFare(Rides[] rides) {
+        double totalFare = 0;
+        for(Rides ride : rides) {
+            totalFare += calculateFare(ride.distance, ride.time);
+            averagePerRide = totalFare/rides.length;
+        }
+        return averagePerRide;
     }
 }
