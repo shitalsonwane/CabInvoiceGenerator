@@ -21,12 +21,28 @@ public class InvoiceServiceTest {
     }
 
     @Test
-    public void givenMultipleRides_ShouldReturn_TotalFareForNormalRide() {
+    public void givenMultipleRides_ShouldReturn_TotalRide() {
+        InvoiceService cabInvoiceGenerator = new InvoiceService(TypesOfCabs.NORMAL_RIDES);
+        Rides[] rides = {new Rides(2.0, 5), new Rides(0.1, 1)};
+        double[] result = cabInvoiceGenerator.calculateFare(rides);
+        Assert.assertEquals(2, result[0], 0.0);
+    }
+
+    @Test
+    public void givenMultipleRides_ShouldReturn_TotalFareRide() {
         InvoiceService cabInvoiceGenerator = new InvoiceService(TypesOfCabs.NORMAL_RIDES);
         Rides[] rides = {new Rides(2.0, 5),
                 new Rides(0.1, 1)};
-        double result = cabInvoiceGenerator.calculateFare(rides);
-        Assert.assertEquals(15.0, result, 0.0);
+        double[] result = cabInvoiceGenerator.calculateFare(rides);
+        Assert.assertEquals(30.0, result[1], 0.0);
+    }
 
+    @Test
+    public void givenMultipleRides_ShouldReturn_TotalAggregateOfRide() {
+        InvoiceService cabInvoiceGenerator = new InvoiceService(TypesOfCabs.NORMAL_RIDES);
+        Rides[] rides = {new Rides(2.0, 5),
+                new Rides(0.1, 1)};
+        double[] result = cabInvoiceGenerator.calculateFare(rides);
+        Assert.assertEquals(15.0, result[2], 0.0);
     }
 }

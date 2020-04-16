@@ -17,12 +17,15 @@ public class InvoiceService {
         return 0.0;
     }
 
-    public double calculateFare(Rides[] rides) {
+    public double[] calculateFare(Rides[] rides) {
+        double[] result = new double[3];
         double totalFare = 0;
         for(Rides ride : rides) {
             totalFare += calculateFare(ride.distance, ride.time);
-            averagePerRide = totalFare/rides.length;
         }
-        return averagePerRide;
+        result[0] = rides.length;
+        result[1] = totalFare;
+        result[2] = totalFare/rides.length;
+        return result;
     }
 }
