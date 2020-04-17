@@ -41,4 +41,44 @@ public class InvoiceServiceTest {
         InvoiceSummary expectedResult = new InvoiceSummary(2,30.0);
         Assert.assertEquals(summary, expectedResult);
     }
+
+    @Test
+    public void givenDistanceAndTime_GeneratorShouldReturn_TotalFareForPrimeRide() {
+        double distance = 2.0;
+        int time = 5;
+        InvoiceService cabInvoiceGenerator = new InvoiceService(TypesOfCabs.PREMIUM_RIDES);
+        double fare = cabInvoiceGenerator.calculateFare(distance, time);
+        Assert.assertEquals(40, fare, 0.0);
+    }
+
+    @Test
+    public void givenDistanceAndTime_GeneratorShouldReturn_MinimumForPrimeRide() {
+        double distance = 0.1;
+        int time = 1;
+        InvoiceService cabInvoiceGenerator = new InvoiceService(TypesOfCabs.PREMIUM_RIDES);
+        double fare = cabInvoiceGenerator.calculateFare(distance, time);
+        Assert.assertEquals(20, fare, 0.0);
+    }
+
+    @Test
+    public void givenMultipleRides_ShouldReturn_TotalFareOfPremiumRide() {
+        InvoiceService cabInvoiceGenerator = new InvoiceService(TypesOfCabs.PREMIUM_RIDES);
+        Rides[] rides = {new Rides(2.0, 5),
+                new Rides(0.1, 1)};
+        InvoiceSummary summary = cabInvoiceGenerator.calculateFare(rides);
+        InvoiceSummary expectedResult = new InvoiceSummary(2,60.0);
+        Assert.assertEquals(summary, expectedResult);
+    }
+
+    @Test
+    public void givenUserId_ShouldReturn_InvoiceSummeryForPremiumRide() {
+        InvoiceService cabInvoiceGenerator = new InvoiceService(TypesOfCabs.PREMIUM_RIDES);
+        String userId = "abc.com";
+        Rides[] rides = {new Rides(2.0, 5),
+                new Rides(0.1, 1)};
+        cabInvoiceGenerator.addRides(userId, rides);
+        InvoiceSummary summary = cabInvoiceGenerator.getInvoiceSummary(userId);
+        InvoiceSummary expectedResult = new InvoiceSummary(2,60.0);
+        Assert.assertEquals(summary, expectedResult);
+    }
 }

@@ -1,3 +1,4 @@
 public enum TypesOfCabs {
-    NORMAL_RIDES
+    NORMAL_RIDES,
+    PREMIUM_RIDES
 }
